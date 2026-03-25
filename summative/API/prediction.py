@@ -5,13 +5,13 @@ from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 
-# 1. Get the absolute path to the folder where this script is located
+# 1. Define BASE_DIR first
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 2. Initialize FastAPI
+# 2. Define the FastAPI instance (MUST be named 'app')
 app = FastAPI(title="CO2 Prediction API")
 
-# 3. Load the Model and Scaler using the BASE_DIR
+# 3. Load the Model and Scaler using the absolute paths
 model_path = os.path.join(BASE_DIR, "best_model.pkl")
 scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
 
@@ -40,3 +40,4 @@ async def retrain():
 @app.get("/")
 def read_root():
     return {"message": "CO2 Prediction API is running. Visit /docs for Swagger UI."}
+
