@@ -5,16 +5,14 @@ from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 
-# 1. Define BASE_DIR first
+# Get the directory where THIS file (prediction.py) is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 2. Define the FastAPI instance (MUST be named 'app')
-app = FastAPI(title="CO2 Prediction API")
-
-# 3. Load the Model and Scaler using the absolute paths
+# Build the absolute path to the .pkl files
 model_path = os.path.join(BASE_DIR, "best_model.pkl")
 scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
 
+# Load them using the absolute paths
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
 
@@ -32,7 +30,7 @@ async def predict(data: PredictionInput):
     prediction = model.predict(scaled_data)
     return {"predicted_co2_emissions": round(float(prediction[0]), 2)}
 
-# 6. Retraining Endpoint (Required for Task 2)
+# 6. Retraining Endpoint 
 @app.post("/retrain")
 async def retrain():
     return {"message": "Model retraining triggered successfully"}
