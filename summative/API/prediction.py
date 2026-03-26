@@ -6,6 +6,16 @@ from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 
 app = FastAPI(title="CO2 Prediction API")
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Get the directory where THIS file (prediction.py) is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
