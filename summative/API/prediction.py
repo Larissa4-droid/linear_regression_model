@@ -1,13 +1,12 @@
 import os
 import joblib
+import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-from fastapi.middleware.cors import CORSMiddleware
-import numpy as np
+from fastapi.middleware.cors import CORSMiddleware  
 
 app = FastAPI(title="CO2 Prediction API")
 
-from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,16 +15,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# Get the directory where THIS file (prediction.py) is located
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# -----------------------------
 
-# Build the absolute path to the .pkl files
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, "best_model.pkl")
 scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
 
-# Load them using the absolute paths
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
+
 
 # 4. Define Input Data Schema with Pydantic 
 class PredictionInput(BaseModel):
