@@ -23,9 +23,12 @@ model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
 
 class PredictionInput(BaseModel):
-    engine_size: float = Field(..., gt=0, lt=10, description="Engine size in Liters")
-    cylinders: int = Field(..., gt=0, lt=16, description="Number of cylinders")
-    fuel_consumption: float = Field(..., gt=0, lt=50, description="Fuel consumption L/100km")
+    engine_size: float = Field(..., alias="engineSize", gt=0, lt=10)
+    cylinders: int = Field(..., alias="numberOfCylinders", gt=0, lt=16)
+    fuel_consumption: float = Field(..., alias="fuelConsumption", gt=0, lt=50)
+
+    class Config:
+        populate_by_name = True
 
 @app.get("/")
 def read_root():
