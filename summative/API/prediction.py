@@ -22,10 +22,11 @@ scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
 
+
 class PredictionInput(BaseModel):
-    engine_size: float = Field(..., alias="engineSize", gt=0, lt=10)
-    cylinders: int = Field(..., alias="numberOfCylinders", gt=0, lt=16)
-    fuel_consumption: float = Field(..., alias="fuelConsumption", gt=0, lt=50)
+    engine_size: float = Field(..., gt=0, lt=10)
+    cylinders: int = Field(..., gt=0, lt=16)
+    fuel_consumption: float = Field(..., gt=0, lt=50)
 
     class Config:
         populate_by_name = True
