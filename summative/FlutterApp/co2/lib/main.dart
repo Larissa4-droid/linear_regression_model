@@ -19,13 +19,11 @@ class _CO2PredictorState extends State<CO2Predictor> {
   final TextEditingController _engineSize = TextEditingController();
   final TextEditingController _cylinders = TextEditingController();
   final TextEditingController _fuel = TextEditingController();
-  String _result = "Enter vehicle data to predict CO2";
+  String _result = "Result will appear here";
   bool _isLoading = false;
 
   Future<void> getPrediction() async {
-    // Your Live Railway API URL
     const String url = "https://linearregressionmodel-production.up.railway.app/predict";
-
     setState(() => _isLoading = true);
 
     try {
@@ -42,13 +40,13 @@ class _CO2PredictorState extends State<CO2Predictor> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          _result = "Predicted CO2: ${data['predicted_co2_emissions']} g/km";
+          _result = "${data['predicted_co2_emissions']} g/km";
         });
       } else {
-        setState(() => _result = "API Error: ${response.statusCode}");
+        setState(() => _result = "Error: ${response.statusCode}");
       }
     } catch (e) {
-      setState(() => _result = "Check internet connection.");
+      setState(() => _result = "Check Connection");
     } finally {
       setState(() => _isLoading = false);
     }
@@ -57,67 +55,78 @@ class _CO2PredictorState extends State<CO2Predictor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("CO2 Emission Predictor"),
-        backgroundColor: Colors.green[800],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Icon(Icons.directions_car, size: 80, color: Colors.green),
-              const SizedBox(height: 20),
-              TextField(
-                  controller: _engineSize,
-                  decoration: const InputDecoration(
-                    labelText: "Engine Size (Liters)",
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number),
-              const SizedBox(height: 15),
-              TextField(
-                  controller: _cylinders,
-                  decoration: const InputDecoration(
-                    labelText: "Number of Cylinders",
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number),
-              const SizedBox(height: 15),
-              TextField(
-                  controller: _fuel,
-                  decoration: const InputDecoration(
-                    labelText: "Fuel Consumption (L/100km)",
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number),
-              const SizedBox(height: 30),
-              _isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: getPrediction,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[700],
-                        minimumSize: const Size(double.infinity, 50),
-                      ),
-                      child: const Text("Predict Now", style: TextStyle(color: Colors.white, fontSize: 18)),
-                    ),
-              const SizedBox(height: 40),
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  _result,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.green.shade900, Colors.green.shade500],
           ),
         ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Card(
+              elevation: 10,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.eco, size: 60, color: Colors.green.shade700),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "CO2 Predictor",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    const Text("Enter vehicle specs below", style: TextStyle(color: Colors.grey)),
+                    const SizedBox(height: 30),
+                    _buildInput(_engineSize, "Engine Size (L)", Icons.settings_input_component),
+                    const SizedBox(height: 15),
+                    _buildInput(_cylinders, "Cylinders", Icons.reorder),
+                    const SizedBox(height: 15),
+                    _buildInput(_fuel, "Fuel Consumption", Icons.local_gas_station),
+                    const SizedBox(height: 30),
+                    _isLoading
+                        ? const CircularProgressIndicator()
+                        : ElevatedButton(
+                            onPressed: getPrediction,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green.shade700,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                            ),
+                            child: const Text("PREDICT NOW", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          ),
+                    const SizedBox(height: 30),
+                    const Divider(),
+                    const Text("Predicted Emission", style: TextStyle(fontSize: 14, color: Colors.grey)),
+                    const SizedBox(height: 5),
+                    Text(
+                      _result,
+                      style: TextStyle(fontSize: 28, color: Colors.green.shade900, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInput(TextEditingController controller, String label, IconData icon) {
+    return TextField(
+      controller: controller,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: Colors.green),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        filled: true,
+        fillColor: Colors.grey.shade50,
       ),
     );
   }

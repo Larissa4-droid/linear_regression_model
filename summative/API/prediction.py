@@ -24,9 +24,9 @@ scaler = joblib.load(scaler_path)
 
 
 class PredictionInput(BaseModel):
-    engine_size: float = Field(..., gt=0, lt=10)
-    cylinders: int = Field(..., gt=0, lt=16)
-    fuel_consumption: float = Field(..., gt=0, lt=50)
+    engine_size: float = Field(..., alias="engine_size", gt=0, lt=10)
+    cylinders: int = Field(..., alias="cylinders", gt=0, lt=16)
+    fuel_consumption: float = Field(..., alias="fuel_consumption", gt=0, lt=100)
 
     class Config:
         populate_by_name = True
