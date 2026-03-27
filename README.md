@@ -1,13 +1,14 @@
 # Automotive Environmental Compliance: CO2 Emissions Prediction
 
 # Mission Statement
-Predict vehicle CO2 emissions using engine and fuel consumption features to support environmental impact analysis. This tool allows for auditing prototype designs for environmental 
-compliance before physical production, addressing the need for instant data feedback in sustainable vehicle design.
+The mission is to support environmental impact analysis by accurately predicting vehicle CO2 emissions based on technical specifications. This tool allows manufacturers to audit prototype designs for environmental compliance before physical production, addressing the critical need for data feedback in sustainable vehicle engineering.
 
 # Description and Source of Data
-Problem: Instant feedback on carbon footprints is required during the vehicle design phase to meet global emissions standards.
-Source: CO2 Emissions Canada Dataset (Kaggle).
-Characteristics: 7,385 records featuring Engine Size, Cylinders, Fuel Type, and Consumption metrics.
+Problem: Reducing carbon footprints requires instant data feedback during the vehicle design phase.
+
+Source: This project uses the CO2 Emissions Canada dataset sourced from Kaggle.
+
+Dataset Characteristics: It is a rich dataset containing 7,385 records with a variety of features including Engine Size, Cylinders, Fuel Type, and multiple Fuel Consumption metrics.
 
 # Public API & Video Demo
 Public API (Swagger UI): https://linearregressionmodel-production.up.railway.app/docs
@@ -29,17 +30,29 @@ linear_regression_model/
 
 # How to Run
 1. API (FastAPI)
-Navigate to summative/API.
-Install requirements: pip install -r requirements.txt.
-Run locally: uvicorn prediction:app --reload.
+
+Navigate to the API folder: cd summative/API.
+
+Install dependencies: pip install -r requirements.txt.
+
+Run the server: uvicorn prediction:app --reload.
+
+Access Swagger UI at https://linearregressionmodel-production.up.railway.app/docs 
 
 2. Mobile App (Flutter)
-Ensure Flutter is installed (flutter doctor).
-Navigate to summative/FlutterApp/co2.
-Fetch packages: flutter pub get.
-Launch an Android Emulator or iOS Simulator.
-Run: flutter run.
+
+Ensure the Flutter SDK is installed and an emulator is running.
+
+Navigate to the app folder: cd summative/FlutterApp/co2.
+
+Install packages: flutter pub get.
+
+Launch the app: flutter run.
 
 3. Notebook (Training)
-Ensure CO2 Emissions_Canada.csv is in the linear_regression folder.
-Run multivariate.ipynb to visualize data and see the comparison between Linear Regression, Decision Trees, and Random Forest.
+
+Open multivariate.ipynb in Jupyter or Google Colab.
+
+Ensure CO2 Emissions_Canada.csv is in the same directory.
+
+Execute cells to view visualizations (Heatmaps, Scatter plots) and compare Linear Regression, Decision Trees, and Random Forest models.

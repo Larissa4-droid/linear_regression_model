@@ -31,10 +31,10 @@ class _CO2PredictorState extends State<CO2Predictor> {
         Uri.parse(url),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
-          "engine_size": double.parse(_engineSize.text),
-          "cylinders": int.parse(_cylinders.text),
-          "fuel_consumption": double.parse(_fuel.text),
-        }),
+  "engine_size": double.parse(_engineSize.text),
+  "cylinders": int.parse(_cylinders.text),
+  "fuel_consumption": double.parse(_fuel.text),
+}),
       );
 
       if (response.statusCode == 200) {
