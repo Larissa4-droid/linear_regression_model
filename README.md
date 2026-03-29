@@ -12,7 +12,7 @@ Dataset Characteristics: It is a rich dataset containing 7,385 records with a va
 
 # Public API & Video Demo
 Public API (Swagger UI): https://linearregressionmodel-production.up.railway.app/docs
-Video Demo (YouTube):
+Video Demo (YouTube): https://youtu.be/QOp3Ycccsn8
 
 # Repository Structure
 linear_regression_model/
